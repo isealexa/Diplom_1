@@ -38,11 +38,11 @@ public class BurgerTest {
     public void addIngredientHasToAddIngredient(){
         addTestIngredients();
 
-        assertNotNull(burger.ingredients);
-        assertEquals(3, burger.ingredients.size());
-        assertEquals(ketchup, burger.ingredients.get(0));
-        assertEquals(beef, burger.ingredients.get(1));
-        assertEquals(tomato, burger.ingredients.get(2));
+        assertNotNull("Массив ингридиентов оказался пустым", burger.ingredients);
+        assertEquals("Размер массива ингридиентов не соответвует ожидаемому",3, burger.ingredients.size());
+        assertEquals("Первый элемент в массиве ингридиентов не соотвествет ожидаемому", ketchup, burger.ingredients.get(0));
+        assertEquals("Второй элемент в массиве ингридиентов не соотвествет ожидаемому", beef, burger.ingredients.get(1));
+        assertEquals("Третий элемент в массиве ингридиентов не соотвествет ожидаемому", tomato, burger.ingredients.get(2));
     }
 
     @Test
@@ -50,11 +50,12 @@ public class BurgerTest {
         addTestIngredients();
         burger.removeIngredient(1);
 
-        assertNotNull(burger.ingredients);
-        assertEquals(2, burger.ingredients.size());
-        assertFalse(burger.ingredients.contains(beef));
-        assertEquals(ketchup, burger.ingredients.get(0));
-        assertEquals(tomato, burger.ingredients.get(1));
+        assertNotNull("Массив ингридиентов оказался пустым", burger.ingredients);
+        assertEquals("Размер массива ингридиентов не соответвует ожидаемому",2, burger.ingredients.size());
+        assertFalse("В массиве обнаружен ингридиент, которого там быть не должно", burger.ingredients.contains(beef));
+        assertEquals("Первый элемент в массиве ингридиентов не соотвествет ожидаемому", ketchup, burger.ingredients.get(0));
+        assertEquals("Второй элемент в массиве ингридиентов не соотвествет ожидаемому", tomato, burger.ingredients.get(1));
+
     }
 
     @Test
@@ -64,15 +65,16 @@ public class BurgerTest {
         burger.removeIngredient(0);
         burger.removeIngredient(0);
 
-        assertNotNull(burger.ingredients);
-        assertEquals(0, burger.ingredients.size());
-        assertFalse(burger.ingredients.contains(ketchup));
-        assertFalse(burger.ingredients.contains(beef));
-        assertFalse(burger.ingredients.contains(tomato));
+        assertNotNull("Массив ингридиентов не должен быть пустым, даже ", burger.ingredients);
+        assertEquals("Размер массива ингридиентов не соответвует ожидаемому",0, burger.ingredients.size());
+        assertFalse("В массиве обнаружен ингридиент, которого там быть не должно", burger.ingredients.contains(ketchup));
+        assertFalse("В массиве обнаружен ингридиент, которого там быть не должно", burger.ingredients.contains(beef));
+        assertFalse("В массиве обнаружен ингридиент, которого там быть не должно", burger.ingredients.contains(tomato));
     }
 
 //    @Test
 //    public void moveIngredientHasToMoveIngredient(){
-//
+//        addTestIngredients();
+//        burger.moveIngredient();
 //    }
 }
