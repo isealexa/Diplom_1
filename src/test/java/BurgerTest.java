@@ -20,6 +20,12 @@ public class BurgerTest {
          burger = new Burger();
     }
 
+    public void addTestIngredients(){
+        burger.addIngredient(ketchup);
+        burger.addIngredient(beef);
+        burger.addIngredient(tomato);
+    }
+
 
     @Test
     public void setBunsHasToSetBun(){
@@ -30,9 +36,7 @@ public class BurgerTest {
 
     @Test
     public void addIngredientHasToAddIngredient(){
-        burger.addIngredient(ketchup);
-        burger.addIngredient(beef);
-        burger.addIngredient(tomato);
+        addTestIngredients();
 
         assertNotNull(burger.ingredients);
         assertEquals(3, burger.ingredients.size());
@@ -42,16 +46,33 @@ public class BurgerTest {
     }
 
     @Test
-    public void removeIngredientHasToRemoveIngredient(){
-        burger.addIngredient(ketchup);
-        burger.addIngredient(beef);
-        burger.addIngredient(tomato);
-
+    public void removeIngredientOnceHasToRemoveOneIngredient(){
+        addTestIngredients();
         burger.removeIngredient(1);
+
         assertNotNull(burger.ingredients);
         assertEquals(2, burger.ingredients.size());
         assertFalse(burger.ingredients.contains(beef));
         assertEquals(ketchup, burger.ingredients.get(0));
         assertEquals(tomato, burger.ingredients.get(1));
     }
+
+    @Test
+    public void removeIngredientTreeTimesHasToRemoveAllIngredient(){
+        addTestIngredients();
+        burger.removeIngredient(0);
+        burger.removeIngredient(0);
+        burger.removeIngredient(0);
+
+        assertNotNull(burger.ingredients);
+        assertEquals(0, burger.ingredients.size());
+        assertFalse(burger.ingredients.contains(ketchup));
+        assertFalse(burger.ingredients.contains(beef));
+        assertFalse(burger.ingredients.contains(tomato));
+    }
+
+//    @Test
+//    public void moveIngredientHasToMoveIngredient(){
+//
+//    }
 }
