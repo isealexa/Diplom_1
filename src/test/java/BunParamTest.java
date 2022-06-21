@@ -24,7 +24,7 @@ public class BunParamTest {
     }
 
     @Parameterized.Parameters(name = "Test {index} checks methods for Bun class when {4}")
-    public static Object[][] getOrdersWithCorrectData() {
+    public static Object[][] getBunParam() {
         return new Object[][] {
                 {null, null, (float) 0, (float) 0, "the bun doesn't have name and price = 0"},
                 {"", "", (float) 1, (float) 1, "the bun has empty name and price = 1"},
