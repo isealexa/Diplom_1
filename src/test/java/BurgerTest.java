@@ -11,21 +11,21 @@ import praktikum.Ingredient;
 public class BurgerTest {
 
     private Burger burger;
-    private static final Ingredient ketchup = new Ingredient(SAUCE, "ketchup", 8);
-    private static final Ingredient beef = new Ingredient(FILLING,"beef", 53 );
-    private static final Ingredient tomato = new Ingredient(FILLING, "tomato", 12);
 
     @Before
     public void setUp(){
-         burger = new Burger();
+        burger = new Burger();
     }
+
+    private static final Ingredient ketchup = new Ingredient(SAUCE, "ketchup", 8);
+    private static final Ingredient beef = new Ingredient(FILLING,"beef", 53 );
+    private static final Ingredient tomato = new Ingredient(FILLING, "tomato", 12);
 
     public void addTestIngredients(){
         burger.addIngredient(ketchup);
         burger.addIngredient(beef);
         burger.addIngredient(tomato);
     }
-
 
     @Test
     public void setBunsHasToSetBun(){
@@ -55,7 +55,6 @@ public class BurgerTest {
         assertFalse("В массиве обнаружен ингридиент, которого там быть не должно", burger.ingredients.contains(beef));
         assertEquals("Первый элемент в массиве ингридиентов не соотвествет ожидаемому", ketchup, burger.ingredients.get(0));
         assertEquals("Второй элемент в массиве ингридиентов не соотвествет ожидаемому", tomato, burger.ingredients.get(1));
-
     }
 
     @Test
