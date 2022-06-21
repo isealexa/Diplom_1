@@ -11,7 +11,7 @@ import praktikum.Ingredient;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BurgerMockTest {
+public class BurgerGetPriceMockTest {
 
     private Burger burger;
     @Mock Bun mockBun;
@@ -69,6 +69,7 @@ public class BurgerMockTest {
     }
 
     @Test
+    //Считаем цену бургера с одним ингридиентом
     public void getPriceWithOneIngredientHasToCountBurgersPriceCorrect(){
         float expectedPrice = (float) 40;
         int countIngredients = 1;
@@ -80,6 +81,7 @@ public class BurgerMockTest {
     }
 
     @Test
+    //Считаем цену бургера с двумя ингридиентами, получим сумму с копейками
     public void getPriceWithTwoIngredientsHasToCountBurgersPriceCorrect(){
         float expectedPrice = (float) 81.66;
         int countIngredients = 2;
@@ -91,6 +93,7 @@ public class BurgerMockTest {
     }
 
     @Test
+    //Считаем цену бургера с тремя ингридиентами, получим круглую сумму
     public void getPriceWithThreeIngredientsHasToCountBurgersPriceCorrect(){
         float expectedPrice = 100;
         int countIngredients = 3;
@@ -102,6 +105,7 @@ public class BurgerMockTest {
     }
 
     @Test
+    //Считаем цену бургера без ингридиентов
     public void getPriceWithoutIngredientsHasToCountBurgersPriceCorrect(){
         float expectedPrice = (float) 30;
         int countIngredients = 0;
