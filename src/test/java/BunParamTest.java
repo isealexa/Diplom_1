@@ -41,13 +41,13 @@ public class BunParamTest {
     }
 
     @Test
-    public void getNameHasToReturnNameAsString(){
+    public void getNameHasToReturnBunsNameAsString(){
         String actualName = bun.getName();
         assertEquals(expectedName, actualName);
     }
 
     @Test
-    public void getPriceHasToReturnPriceAsFloat(){
+    public void getPriceHasToReturnBunsPriceAsFloat(){
         float actualPrice = bun.getPrice();
         assertEquals(expectedPrice, actualPrice, 0);
     }
