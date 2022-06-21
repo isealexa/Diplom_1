@@ -72,9 +72,12 @@ public class BurgerTest {
         assertFalse("В массиве обнаружен ингридиент, которого там быть не должно", burger.ingredients.contains(tomato));
     }
 
-//    @Test
-//    public void moveIngredientHasToMoveIngredient(){
-//        addTestIngredients();
-//        burger.moveIngredient();
-//    }
+    @Test
+    public void moveIngredientHasToMoveIngredient(){
+        addTestIngredients();
+        burger.moveIngredient(0, 1);
+
+        assertEquals("Первый элемент в массиве ингридиентов не соотвествет ожидаемому", beef, burger.ingredients.get(0));
+        assertEquals("Второй элемент в массиве ингридиентов не соотвествет ожидаемому", ketchup, burger.ingredients.get(1));
+    }
 }
