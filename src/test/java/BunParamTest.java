@@ -43,12 +43,12 @@ public class BunParamTest {
     @Test
     public void getNameHasToReturnBunsNameAsString(){
         String actualName = bun.getName();
-        assertEquals(expectedName, actualName);
+        assertEquals("Метод getName возвращает неправильное значение", expectedName, actualName);
     }
 
     @Test
     public void getPriceHasToReturnBunsPriceAsFloat(){
         float actualPrice = bun.getPrice();
-        assertEquals(expectedPrice, actualPrice, 0);
+        assertEquals("Метод getPrice возвращает неправильное значение", expectedPrice, actualPrice, 0);
     }
 }

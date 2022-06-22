@@ -18,18 +18,18 @@ public class IngredientTypeTest {
 
     @Test
     public void checkEnumIngredientTypeSize(){
-        assertNotNull(ingredientType);
-        assertEquals(2, ingredientType.length);
+        assertNotNull("Класс ENUM IngredientType пустой = NULL", ingredientType);
+        assertEquals("Размер класса ENUM не соотвествет", 2, ingredientType.length);
     }
 
     @Test
     public void checkEnumIngredientTypeContainsSAUCE(){
-        assertEquals("SAUCE", ingredientType[0].toString());
+        assertEquals("В классе ENUM IngredientType допущена опечатка, либо элемент SAUCE отсутвует, либо находится не на своём месте", "SAUCE", ingredientType[0].toString());
     }
 
     @Test
     public void checkEnumIngredientTypeContainsFILLING(){
-        assertEquals("FILLING", ingredientType[1].toString());
+        assertEquals("В классе ENUM IngredientType допущена опечатка, либо элемент FILLING отсутвует, либо находится не на своём месте","FILLING", ingredientType[1].toString());
     }
 
     @Test
@@ -39,7 +39,7 @@ public class IngredientTypeTest {
 
         String[] arrayStringTypes = Stream.of(IngredientType.values()).map(IngredientType::name).toArray(String[]::new);
         boolean actual = Arrays.asList(arrayStringTypes).contains(incorrectType);
-        assertEquals(expected, actual);
+        assertEquals("В классе ENUM IngredientType найден элемент BUN, его не должно там быть", expected, actual);
     }
 
     @Test
@@ -49,6 +49,6 @@ public class IngredientTypeTest {
 
         String[] arrayStringTypes = Stream.of(IngredientType.values()).map(IngredientType::name).toArray(String[]::new);
         boolean actual = Arrays.asList(arrayStringTypes).contains(incorrectType);
-        assertEquals(expected, actual);
+        assertEquals("В классе ENUM IngredientType найден пустой элемент, его не должно там быть", expected, actual);
     }
 }

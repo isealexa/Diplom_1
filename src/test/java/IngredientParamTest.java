@@ -52,18 +52,18 @@ public class IngredientParamTest {
     @Test
     public void getTypeHasToReturnIngredientsType(){
         IngredientType actualType = ingredient.getType();
-        assertEquals(expectedType, actualType);
+        assertEquals("Метод getType возвращает неправильное значение", expectedType, actualType);
     }
 
     @Test
     public void getNameHasToReturnIngredientsNameAsString(){
         String actualName = ingredient.getName();
-        assertEquals(expectedName, actualName);
+        assertEquals("Метод getName возвращает неправильное значение", expectedName, actualName);
     }
 
     @Test
     public void getPriceHasToReturnIngredientsPriceAsFloat(){
         float actualPrice = ingredient.getPrice();
-        assertEquals(expectedPrice, actualPrice, 0);
+        assertEquals("Метод getPrice возвращает неправильное значение", expectedPrice, actualPrice, 0);
     }
 }
