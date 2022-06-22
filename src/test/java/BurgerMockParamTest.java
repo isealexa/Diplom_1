@@ -1,9 +1,12 @@
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import praktikum.Bun;
 import praktikum.Burger;
 import praktikum.Ingredient;
@@ -12,11 +15,32 @@ import static org.junit.Assert.assertEquals;
 import static praktikum.IngredientType.FILLING;
 import static praktikum.IngredientType.SAUCE;
 
-@RunWith(MockitoJUnitRunner.class)
-public class BurgerMockTest {
+@RunWith(Parameterized.class)
+public class BurgerMockParamTest {
+
+    private final String style;
+    private final float expectedPrice;
+
+    public BurgerMockParamTest(String style, float expectedPrice) {
+        this.style = style;
+        this.expectedPrice = expectedPrice;
+    }
+
+    @Parameterized.Parameters(name = "Test {index} checks methods for Burger class when Burger style = {0}")
+    public static Object[][] getBurgerParam() {
+        return new Object[][]{
+                {"free", 0},
+                {"just bun", 30},
+                {"bun and ketchup", 40},
+                {"bun and beef", 80},
+                {"simple", 90},
+                {"dark", (float) 235.67},
+        };
+    }
+
+    @Rule public MockitoRule rule = MockitoJUnit.rule();
 
     private Burger burger;
-    private String style;
     @Mock Bun mockLightBun;
     @Mock Bun mockDarkBun;
     @Mock Bun mockFreeBun;
@@ -27,7 +51,7 @@ public class BurgerMockTest {
     @Mock Ingredient mockFreeIngredient;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         burger = new Burger();
         Mockito.when(mockLightBun.getPrice()).thenReturn((float) 15);
         Mockito.when(mockDarkBun.getPrice()).thenReturn((float) 25.01);
@@ -92,7 +116,7 @@ public class BurgerMockTest {
         }
     }
 
-    public void verifyGetPrice(String style){
+    public void verifyGetPrice(String style) {
 
         switch (style) {
             case "free":
@@ -126,7 +150,7 @@ public class BurgerMockTest {
         }
     }
 
-    public String getBurgerReceipt(String style){
+    public String getBurgerReceipt(String style) {
 
         setMockBurger(style);
         String receiptBurger = null;
@@ -193,7 +217,7 @@ public class BurgerMockTest {
         return receiptBurger;
     }
 
-    public void verifyGetNameAndType(String style){
+    public void verifyGetNameAndType(String style) {
 
         switch (style) {
             case "free":
@@ -238,11 +262,9 @@ public class BurgerMockTest {
     }
 
     @Test
-    //Считаем цену бургера с одним ингридиентом - соус
-    public void getPriceWithOnlySauceHasToCountBurgersPriceCorrect(){
-        style = "bun and ketchup";
+    //Считаем цену бургера
+    public void getPriceHasToCountBurgersPriceCorrect() {
         setMockBurger(style);
-        float expectedPrice = (float) 40;
         float actualPrice = burger.getPrice();
 
         assertEquals("Цена за бургер посчитана неверно", expectedPrice, actualPrice, 0.001);
@@ -250,124 +272,8 @@ public class BurgerMockTest {
     }
 
     @Test
-    //Считаем цену бургера с одним ингридиентом - начинка
-    public void getPriceWithOnlyFillingHasToCountBurgersPriceCorrect(){
-        style = "bun and beef";
-        setMockBurger(style);
-        float expectedPrice = (float) 80;
-        float actualPrice = burger.getPrice();
-
-        assertEquals("Цена за бургер посчитана неверно", expectedPrice, actualPrice, 0.001);
-        verifyGetPrice(style);
-    }
-
-    @Test
-    //Считаем цену бургера с двумя ингридиентами, получим круглую сумму
-    public void getPriceForSimpleBurgerHasToCountBurgersPriceCorrect(){
-        style = "simple";
-        setMockBurger(style);
-        float expectedPrice = (float) 90;
-        float actualPrice = burger.getPrice();
-
-        assertEquals("Цена за бургер посчитана неверно", expectedPrice, actualPrice, 0.001);
-        verifyGetPrice(style);
-    }
-
-    @Test
-    //Считаем цену дарк бургера: все ингридиенты, получим сумму с копейками
-    public void getPriceForDarkBurgerHasToCountBurgersPriceCorrect(){
-        style = "dark";
-        setMockBurger(style);
-        float expectedPrice = (float) 235.67;
-        float actualPrice = burger.getPrice();
-
-        assertEquals("Цена за бургер посчитана неверно", expectedPrice, actualPrice, 0.001);
-        verifyGetPrice(style);
-    }
-
-    @Test
-    //Считаем цену бургера без ингридиентов
-    public void getPriceWithoutIngredientsHasToCountBurgersPriceCorrect(){
-        style = "just bun";
-        setMockBurger(style);
-        float expectedPrice = (float) 30;
-        float actualPrice = burger.getPrice();
-
-        assertEquals("Цена за бургер посчитана неверно", expectedPrice, actualPrice, 0.001);
-        verifyGetPrice(style);
-    }
-
-
-    @Test
-    //Считаем цену бургера, если булка и ингридиенты бесплатные
-    public void getPriceForFreeBurgerHasToCountFreePrice(){
-        style = "free";
-        setMockBurger(style);
-        float expectedPrice = 0;
-        float actualPrice = burger.getPrice();
-
-        assertEquals("Цена за бургер посчитана неверно", expectedPrice, actualPrice, 0.001);
-        verifyGetPrice(style);
-    }
-
-    @Test
-    public void getReceiptForBurgerWithOnlySauceHasToReturnReceipt() {
-        style = "bun and ketchup";
-        String expectedReceipt = getBurgerReceipt(style);
-        String actualReceipt = burger.getReceipt();
-
-        assertEquals("Рецепт бургера не соотвествует ожидаемому", expectedReceipt, actualReceipt);
-        verifyGetNameAndType(style);
-        verifyGetPrice(style);
-    }
-
-    @Test
-    public void getReceiptForBurgerWithOnlyFillingHasToReturnReceipt() {
-        style = "bun and beef";
-        String expectedReceipt = getBurgerReceipt(style);
-        String actualReceipt = burger.getReceipt();
-
-        assertEquals("Рецепт бургера не соотвествует ожидаемому", expectedReceipt, actualReceipt);
-        verifyGetNameAndType(style);
-        verifyGetPrice(style);
-    }
-
-    @Test
-    public void getReceiptForSimpleBurgerHasToReturnReceipt() {
-        style = "simple";
-        String expectedReceipt = getBurgerReceipt(style);
-        String actualReceipt = burger.getReceipt();
-
-        assertEquals("Рецепт бургера не соотвествует ожидаемому", expectedReceipt, actualReceipt);
-        verifyGetNameAndType(style);
-        verifyGetPrice(style);
-    }
-
-    @Test
-    public void getReceiptForDarkBurgerHasToReturnReceipt() {
-        style = "dark";
-        String expectedReceipt = getBurgerReceipt(style);
-        String actualReceipt = burger.getReceipt();
-
-        assertEquals("Рецепт бургера не соотвествует ожидаемому", expectedReceipt, actualReceipt);
-        verifyGetNameAndType(style);
-        verifyGetPrice(style);
-    }
-
-    @Test
-    public void getReceiptForBurgerWithJustBunHasToReturnReceipt() {
-        style = "just bun";
-        String expectedReceipt = getBurgerReceipt(style);
-        String actualReceipt = burger.getReceipt();
-
-        assertEquals("Рецепт бургера не соотвествует ожидаемому", expectedReceipt, actualReceipt);
-        verifyGetNameAndType(style);
-        verifyGetPrice(style);
-    }
-
-    @Test
-    public void getReceiptForFreeBurgerHasToReturnReceipt() {
-        style = "free";
+    //Проверяем рецепт бургера
+    public void getReceiptForBurgerHasToReturnReceipt() {
         String expectedReceipt = getBurgerReceipt(style);
         String actualReceipt = burger.getReceipt();
 
